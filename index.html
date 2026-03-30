@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counting Down for Tanush... 🎂</title>
+    <style>
+        body, html { margin: 0; padding: 0; height: 100vh; overflow: hidden; background: #fff0f3; font-family: 'Segoe UI', sans-serif; }
+        
+        /* Floating Hearts Animation */
+        .heart {
+            position: fixed; bottom: -10%; color: #ff4d6d;
+            font-size: 20px; z-index: 1; user-select: none;
+            animation: float 6s linear infinite; opacity: 0.6;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        #entry-gate {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 240, 243, 0.95); z-index: 100; 
+            display: flex; align-items: center; justify-content: center; text-align: center;
+        }
+
+        .timer-box {
+            padding: 40px; border: 4px solid #ff4d6d; border-radius: 30px;
+            background: white; box-shadow: 0 15px 40px rgba(255, 77, 109, 0.3);
+            z-index: 101; position: relative;
+        }
+
+        #timer { font-size: 3rem; color: #ff4d6d; font-weight: bold; margin: 20px 0; letter-spacing: 2px; }
+
+        .unlock-btn {
+            display: none; background: #ff4d6d; color: white; border: none;
+            padding: 18px 40px; border-radius: 50px; font-size: 1.4rem;
+            cursor: pointer; animation: pulse 1.5s infinite; font-weight: bold;
+        }
+
+        @keyframes pulse { 0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 77, 109, 0.7); } 
+            70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(255, 77, 109, 0); } 100% { transform: scale(1); } }
+
+        .full-screen-portal { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    </style>
+</head>
+<body>
+
+    <div id="heart-container"></div>
+
+    <div id="entry-gate">
+        <div class="timer-box">
+            <h1 style="color: #ff4d6d; font-style: italic;">Wait for it, Tanush... ✨</h1>
+            <div id="timer">00h 00m 00s</div>
+            <p id="message" style="color: #555; font-size: 1.1rem;">The portal unlocks at midnight! 😋</p>
+            <button class="unlock-btn" id="unlockBtn" onclick="unlockPortal()">OPEN YOUR BIRTHDAY GIFT! 🎁</button>
+        </div>
+    </div>
+
+    <audio id="portal-music" loop>
+        <source src="PASTE_YOUR_MUSIC_LINK_HERE" type="audio/mpeg">
+    </audio>
+
+    <iframe src="https://shailly-gift.my.canva.site/happy-birthday" class="full-screen-portal"></iframe>
+
+    <script>
+        // SET BIRTHDAY TO MARCH 31, 2026
+        const birthdayDate = new Date("March 31, 2026 00:00:00").getTime();
+
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = birthdayDate - now;
+
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("timer").innerHTML = h + "h " + m + "m " + s + "s ";
+
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("timer").style.display = "none";
+                document.getElementById("message").innerHTML = "HAPPY BIRTHDAY TANUSH! ❤️<br>Click below to see your story...";
+                document.getElementById("unlockBtn").style.display = "inline-block";
+            }
+        }, 1000);
+
+        function unlockPortal() {
+            document.getElementById('portal-music').play();
+            document.getElementById('entry-gate').style.display = 'none';
+        }
+
+        // CREATE FLOATING HEARTS
+        function createHeart() {
+            const container = document.getElementById('heart-container');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            container.appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 6000);
+        }
+        setInterval(createHeart, 400);
+    </script>
+</body>
+</html>
